@@ -1,164 +1,82 @@
-#### Note
+# Material-UI-Scrollable-Tabs
 
-For *how-to* questions and other non-issues,
-please use [StackOverflow](http://stackoverflow.com/questions/tagged/material-ui)
-instead of Github issues. There is a StackOverflow tag called "material-ui"
-that you can use to tag your questions.
+Material-UI-Scrollable-Tabs is an extension of the Tabs component offered by [Material-UI](http://www.material-ui.com/).
+It offers several additional features beyond those in the native Tabs component offered by material-ui.
 
-#[Material-UI](http://www.material-ui.com/)
-[![npm package](https://img.shields.io/npm/v/material-ui.svg?style=flat-square)](https://www.npmjs.org/package/material-ui)
-[![Build Status](https://travis-ci.org/callemall/material-ui.svg?branch=master)](https://travis-ci.org/callemall/material-ui)
-[![Gitter](https://img.shields.io/badge/gitter-join%20chat-f81a65.svg?style=flat-square)](https://gitter.im/callemall/material-ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Coverage Status](https://coveralls.io/repos/github/callemall/material-ui/badge.svg?branch=master)](https://coveralls.io/github/callemall/material-ui?branch=master)
+This package is not intended to be used as a standalone module and requires material-ui to function.  It is our hope that the
+features offered by this package will eventually be available from within material-ui without the need for this extension.
+In the meantime, this package will be offered so others can take advantage of these additional features.
 
-[![PeerDependencies](https://img.shields.io/david/peer/callemall/material-ui.svg?style=flat-square)](https://david-dm.org/callemall/material-ui#info=peerDependencies&view=list)
-[![Dependencies](https://img.shields.io/david/callemall/material-ui.svg?style=flat-square)](https://david-dm.org/callemall/material-ui)
-[![DevDependencies](https://img.shields.io/david/dev/callemall/material-ui.svg?style=flat-square)](https://david-dm.org/callemall/material-ui#info=devDependencies&view=list)
+## Additional Features
 
-Material-UI is a set of [React](http://facebook.github.io/react/) components that implement
-[Google's Material Design](https://www.google.com/design/spec/material-design/introduction.html)
-specification.
-
-Check out our [documentation site](http://www.material-ui.com/) for live examples.
-It's still a work in progress, but hopefully you can see where we're headed.
-
-**Recently Updated?** Please read the [changelog](https://github.com/callemall/material-ui/releases), this README and the documentation before posting an issue.
-
-## Required Knowledge
-
-We recommend that you get to know [React](http://facebook.github.io/react/)
-before diving into material-ui. Material-UI is a set of React components,
-so understanding how React fits into web development is important.
-
-(If you're not familiar with Node, or with the concept of Single Page Applications (SPAs),
-head over to the [documentation website](http://material-ui.com/#/get-started/required-knowledge)
-for a quick introduction before you read on.)
+* Better adherence to [Material Design](https://material.io/guidelines/components/tabs.html#tabs-specs) tab specifications.
+* Horizontally Scrollable Tabs Container
+  * Scroll Methods
+    * Swipe
+    * Button press
+    * Shift-mousewheel and other browser mechanisms for horizontally scrolling
+  * Animated transitions and smooth scrolling
+  * Scroll selected tab fully into view
+* Multi-line wrapping labels
+  * Automatically clamped with ellipses on webkit browsers
+* Dynamically sized tabs (within material design guidelines)
+* Large view support
 
 ## Installation
+One of our [roadmap](https://github.com/STORIS/material-ui-scrollable-tabs/blob/master/ROADMAP.md) milestones is to post this as an NPM module.
+For now, you can clone this repo, run ````npm run build````, and then install the build directory as a module into your project.
 
-Material-UI is available as an [npm package](https://www.npmjs.org/package/material-ui).
+## Documentation
+See the [Tabs](http://www.material-ui.com/#/components/tabs) documentation of Material-UI for the existing behavior offered by this component.
+In addition, this package offers the following additional props:
 
-**Stable channel**
-```sh
-npm install material-ui
-```
+### Tabs Properties
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| isLargeView | bool | false | Set to true if the component is being rendered on a large width viewport and should adhere to material design's large tab standards |
+| tabType | enum:<br />'fixed'<br />'scrollable'<br />'scrollable-buttons' | 'fixed' | See descriptions of enumerations below |
 
-**Pre-release channel**
-```sh
-npm install material-ui@next
-```
+#### TabTypes
+##### Fixed
+Fixed tabs will behave very similarly to the native Material-UI Tabs implementation.  The tabs container will fill its parent container and each tab
+will be evenly sized within that container.  The main difference in this implementation is with adherence to material design's tab sizing standards.  Tabs
+will not shrink to a smaller size or grow to a larger size than material design's standards call for.  Therefore, tabs may not fill their entire container
+(if constrained by the maximum width) and they might overflow their container (if constrained by the minimum width).  If tabs overflow their container then
+the overflowed tabs will be clipped.
 
-Please note that `@next` will only point to pre-releases; to get the latest stable release use `@latest` instead.
+##### Scrollable
+Scrollable tabs provide the ability to have a horizontally scrolling tab container.  Each tab will be sized to its content within the size limitations of
+material design's tab standards.  If the tabs overflow their container, the user will be able to access those not presently visible via a horizontal
+scroll mechanism (e.g touch swipe, shift-mousewheel, etc.)
 
+##### Scrollable-Buttons
+This behavior is an extension of the scrollable behavior.  In addition to the features of the scrollable tab type, left and right buttons to scroll the
+tab container in that direction are provided.  This would be primarily for desktop environments where touch swipes are unavailable.
 
-### React-Tap-Event-Plugin
+### Tab Properties
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| isMultiLine | bool | false | If true, label will alter its style and attempt to wrap to multiple lines.  On webkit* enabled browsers, the text will only wrap to two lines and clamp with an ellipse.
 
-Some components use
-[react-tap-event-plugin](https://github.com/zilverline/react-tap-event-plugin) to
-listen for touch events because onClick is not fast enough
-_This dependency is temporary and will eventually go away._ Until then,
-be sure to inject this plugin at the start of your app.
-
-```js
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
-```
-
-### Roboto Font
-
-Material-UI was designed with the [Roboto](http://www.google.com/fonts/specimen/Roboto)
-font in mind. So be sure to include it in your project. Here are
-[some instructions](http://www.google.com/fonts#UsePlace:use/Collection:Roboto:400,300,500)
-on how to do so.
-
-## Usage
-
-Beginning with v0.15.0, Material-UI components require a theme to be provided. The quickest way to get up and running is by using the `MuiThemeProvider` to inject the theme into your application context. Following that, you can use any of the components as demonstrated in the documentation.
-
-Here is a quick example to get you started:
-
-**./App.js**
-```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MyAwesomeReactComponent from './MyAwesomeReactComponent';
-
-const App = () => (
-  <MuiThemeProvider>
-    <MyAwesomeReactComponent />
-  </MuiThemeProvider>
-);
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
-);
-```
-
-**./MyAwesomeReactComponent.js**
-```jsx
-import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-
-const MyAwesomeReactComponent = () => (
-  <RaisedButton label="Default" />
-);
-
-export default MyAwesomeReactComponent;
-```
-
-Please refer to each component's documentation page to see how they should be imported.
-
-## Customization
-
-We have implemented a default theme to render all Material-UI components.
-Styling components to your liking is simple and hassle-free. This can be
-achieved in the following two ways:
-
-* [Use a custom theme to style components](http://material-ui.com/#/customization/themes)
-* [Override individual component styles via the `style` prop](http://www.material-ui.com/#/customization/styles)
-
-## Examples
-
-There are 2 projects that you can look at to get started. They can be found in the
-[examples folder](https://github.com/callemall/material-ui/tree/master/examples).
-These projects are basic examples that show how to consume material-ui components
-in your own project. The first project uses [browserify](http://browserify.org/)
-for module bundling and [gulp](http://gulpjs.com/) for JS task automation,
-while the second project uses [webpack](http://webpack.github.io/) for module bundling and building.
-
-The source code for this documentation site is also included in the repository.
-This is a slightly more complex project that also uses webpack, and contains
-examples of every material-ui component. Check out the
-[docs folder](https://github.com/callemall/material-ui/tree/master/docs)
-for build instructions.
+<sub>\* For non-webkit enabled browsers, text will wrap until it fills the height of the tab.  Material design standards do not allow for more than 2 lines of
+text wrapping (and no wrapping at all with icons) so you should probably change your application if this is happening.</sub>
 
 ## Roadmap
 
 The future plans and high priority features and enhancements can be found
-in the [ROADMAP.md](https://github.com/callemall/material-ui/blob/master/ROADMAP.md) file.
+in the [ROADMAP.md](https://github.com/STORIS/material-ui-scrollable-tabs/blob/master/ROADMAP.md) file.
 
 ## Contribute
 
-[Material-UI](http://www.material-ui.com/) came about from our love of
-[React](http://facebook.github.io/react/) and
-[Google's Material Design](https://www.google.com/design/spec/material-design/introduction.html).
-We're currently using it on a project at [Call-Em-All](https://www.call-em-all.com/Careers)
-and plan on adding to it and making it better. If you'd like to help,
-check out the [docs folder](https://github.com/callemall/material-ui/tree/master/docs).
-We'd greatly appreciate any [contribution](https://github.com/callemall/material-ui/blob/master/CONTRIBUTING.md)
-you make. :)
+At this time, we are not actively seeking contributors.  We suggest you make contributions to
+[Material-UI](https://github.com/callemall/material-ui) instead.  If you encounter issues, please feel free to
+[log](https://github.com/STORIS/material-ui-scrollable-tabs/issues/new) it.
 
 ## Thanks
 
-[<img src="https://www.browserstack.com/images/mail/browserstack-logo-footer.png" width="120">](https://www.browserstack.com/)
-
-Thank you to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to test `material-ui` in real browsers.
+Thank you to [Call-Em-All](https://www.call-em-all.com/) and the other contributors of Material-UI for their
+work on an excellent set of UI components.
 
 ## License
 This project is licensed under the terms of the
-[MIT license](https://github.com/callemall/material-ui/blob/master/LICENSE)
+[MIT license](https://github.com/STORIS/material-ui-scrollable-tabs/blob/master/LICENSE)

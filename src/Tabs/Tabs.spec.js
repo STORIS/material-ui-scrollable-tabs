@@ -3,7 +3,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {assert} from 'chai';
 import Tabs from './Tabs';
-import getMuiTheme from '../styles/getMuiTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 describe('<Tabs />', () => {
   const muiTheme = getMuiTheme();

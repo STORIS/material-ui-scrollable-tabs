@@ -57,7 +57,7 @@ class Tab extends Component {
      */
     className: PropTypes.string,
     /**
-     * Sets the height of the tab; calculated by the Tabs component as the largest of all tab items
+     * @ignore
      */
     height: PropTypes.string,
     /**
@@ -69,7 +69,7 @@ class Tab extends Component {
      */
     index: PropTypes.any,
     /**
-     * Is the tab rendered on a desktop display?
+     * @ignore
      */
     isLargeView: PropTypes.bool,
     /**
