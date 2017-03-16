@@ -79,4 +79,4 @@ work on an excellent set of UI components.
 
 ## License
 This project is licensed under the terms of the
-[MIT license](https://github.com/STORIS/material-ui-scrollable-tabs/blob/master/LICENSE)
+[MIT license](https://github.com/STORIS/material-ui-scrollable-tabs/blob/master/LICENSE).
