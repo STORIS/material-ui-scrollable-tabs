@@ -7,7 +7,7 @@ serve as a guide laying out the framework for those goals:
 - [x] Remove all content from material-ui that does not pertain to this standalone library
 - [x] Post repository to github
 - [ ] Add comment to material-ui issues log referencing this feature
-- [ ] Post package to npm
+- [x] Post package to npm
 - [ ] Merge changed components into material-ui proper
 - [ ] Add additional updates to conform to material-ui PR standards
 - [ ] Create PR for material-ui

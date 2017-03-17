@@ -1,10 +1,10 @@
 # Material-UI-Scrollable-Tabs
 
 Material-UI-Scrollable-Tabs is an extension of the Tabs component offered by [Material-UI](http://www.material-ui.com/).
-It offers several additional features beyond those in the native Tabs component offered by material-ui.
+It offers several additional features beyond those in the native Tabs component offered by Material-UI.
 
-This package is not intended to be used as a standalone module and requires material-ui to function.  It is our hope that the
-features offered by this package will eventually be available from within material-ui without the need for this extension.
+This package is not intended to be used as a standalone module and requires Material-UI to function.  It is our hope that the
+features offered by this package will eventually be available from within Material-UI without the need for this extension.
 In the meantime, this package will be offered so others can take advantage of these additional features.
 
 ## Additional Features
@@ -23,18 +23,29 @@ In the meantime, this package will be offered so others can take advantage of th
 * Large view support
 
 ## Installation
-One of our [roadmap](https://github.com/STORIS/material-ui-scrollable-tabs/blob/master/ROADMAP.md) milestones is to post this as an NPM module.
-For now, you can clone this repo, run ````npm run build````, and then install the build directory as a module into your project.
+Material-UI-Scrollable-Tabs is available as an [npm package](https://www.npmjs.com/package/material-ui-scrollable-tabs):
+
+````$ npm install --save material-ui-scrollable-tabs````
 
 ## Documentation
-See the [Tabs](http://www.material-ui.com/#/components/tabs) documentation of Material-UI for the existing behavior offered by this component.
-In addition, this package offers the following additional props:
+Material-UI-Scrollable Tabs offers the same base functionality as the [Tabs](http://www.material-ui.com/#/components/tabs) component of Material-UI as well as some additional features documented below.  See the documentation of Material-UI for information regarding the base functionality.
+
+To use this extension, simply import from the appropriate module folder:
+````
+import { Tabs, Tab } from 'material-ui-scrollable-tabs/Tabs';
+````
+To use the scrollable tabs module at the same time as the standard Material-UI tabs module, import as an alias:
+````
+import { Tabs as ScrollTabs, Tab as ScrollTab } from 'material-ui-scrollable-tabs/Tabs';
+````
+
+In addition to those documented by Material-UI, this package offers the following additional props:
 
 ### Tabs Properties
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| isLargeView | bool | false | Set to true if the component is being rendered on a large width viewport and should adhere to material design's large tab standards |
-| tabType | enum:<br />'fixed'<br />'scrollable'<br />'scrollable-buttons' | 'fixed' | See descriptions of enumerations below |
+| isLargeView | bool | false | Set to true if the component is being rendered on a large width viewport and should adhere to material design's large tab standards. |
+| tabType | enum:<br />'fixed'<br />'scrollable'<br />'scrollable-buttons' | 'fixed' | See descriptions of enumerations below. |
 
 #### TabTypes
 ##### Fixed
