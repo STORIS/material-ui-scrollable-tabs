@@ -1,15 +1,17 @@
 # Roadmap
 
-At this time, this project is not intended to be a long-term, ongoing effort.  The goals of the project are to provide a stable scrollable tabs extension for material-ui
-for use in the short-term.  The long-term hope is that this project will be absorbed into material-ui proper and will thereafter deprecated.  To that end, this roadmap will
+At this time, this project is not intended to be a long-term, ongoing effort.  The goals of the project are to provide a stable scrollable tabs extension for Material-UI
+for use in the short-term.  The long-term hope is that this project will be absorbed into Material-UI proper and will thereafter deprecated.  To that end, this roadmap will
 serve as a guide laying out the framework for those goals:
 
-- [x] Remove all content from material-ui that does not pertain to this standalone library
+- [x] Remove all content from Material-UI that does not pertain to this standalone library
 - [x] Post repository to github
-- [ ] Add comment to material-ui issues log referencing this feature
+- [x] Add comment to Material-UI issues log referencing this feature
 - [x] Post package to npm
-- [ ] Merge changed components into material-ui proper
-- [ ] Add additional updates to conform to material-ui PR standards
-- [ ] Create PR for material-ui
-- [ ] material-ui PR acceptance
+- [ ] Create examples of use
+- [ ] Get listed as related project of Material-UI
+- [ ] Create _next_ branch of this project based on Material-UI next branch
+- [ ] Merge _next_ branch of this project into Material-UI next branch
+- [ ] Create PR for Material-UI
+- [ ] Material-UI PR acceptance
 - [ ] Mark this library as deprecated and unmaintained

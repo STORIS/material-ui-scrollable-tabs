@@ -88,10 +88,10 @@ module.exports = {
     'react/jsx-closing-bracket-location': 'error',
     'react/jsx-curly-spacing': 'error',
     'react/jsx-equals-spacing': 'error',
-    'react/jsx-filename-extension': ['error', {extensions: ['.js']}],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     'react/jsx-first-prop-new-line': ['error', 'multiline'],
     'react/jsx-handler-names': 'error',
-    'react/jsx-indent': ['error', 2, {indentLogicalExpressions: true}],
+    'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
     'react/jsx-max-props-per-line': ['error', {maximum: 3}],
     'react/jsx-no-comment-textnodes': 'error',
@@ -116,6 +116,7 @@ module.exports = {
     'react/prop-types': 'error',
     'react/react-in-jsx-scope': 'error',
     'import/extensions': 'error',
+    'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }],
     'react/require-render-return': 'error',
     'react/self-closing-comp': 'error',
     'react/sort-comp': 'error',
@@ -145,4 +146,11 @@ module.exports = {
     'babel/object-shorthand': 'off',
     'babel/new-cap': 'off',
   },
+	"settings": {
+		"import/resolver": {
+			"webpack": {
+				"config": "./webpack.config.js"
+			}
+		}
+	}
 };

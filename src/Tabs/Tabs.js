@@ -25,7 +25,7 @@ const getStyles = (props, context, state) => {
       backgroundColor: tabs.backgroundColor,
     },
     scrollButtonIcon: {
-      color: tabs.textColor,
+      color: tabs.selectedTextColor,
       fontSize: 24,
     },
     tabItemContainer: {
