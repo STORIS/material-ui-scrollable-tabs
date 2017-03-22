@@ -25,7 +25,9 @@ In the meantime, this package will be offered so others can take advantage of th
 ## Installation
 Material-UI-Scrollable-Tabs is available as an [npm package](https://www.npmjs.com/package/material-ui-scrollable-tabs):
 
-````$ npm install --save material-ui-scrollable-tabs````
+```sh
+$ npm install --save material-ui-scrollable-tabs
+```
 
 ## Documentation
 Material-UI-Scrollable Tabs offers the same base functionality as the [Tabs](http://www.material-ui.com/#/components/tabs) component of Material-UI as well as some additional features documented below.  See the documentation of Material-UI for information regarding the base functionality.
@@ -33,13 +35,13 @@ Material-UI-Scrollable Tabs offers the same base functionality as the [Tabs](htt
 Live samples and documentation are available by following the instructions located [here](https://github.com/STORIS/material-ui-scrollable-tabs/blob/master/examples/README.md).
 
 To use this extension, simply import from the appropriate module folder:
-````
+```js
 import { Tabs, Tab } from 'material-ui-scrollable-tabs/Tabs';
-````
+```
 To use the scrollable tabs module at the same time as the standard Material-UI tabs module, import as an alias:
-````
+```js
 import { Tabs as ScrollTabs, Tab as ScrollTab } from 'material-ui-scrollable-tabs/Tabs';
-````
+```
 
 In addition to those documented by Material-UI, this package offers the following additional props:
 
