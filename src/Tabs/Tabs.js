@@ -259,14 +259,16 @@ class Tabs extends Component {
     const selectedButtonLeft = this.tabComponentList[index].getLeft();
     const selectedButtonRight = selectedButtonLeft + this.tabComponentList[index].getWidth();
 
-    if (selectedButtonLeft < tabItemContainerLeft) {
-      // left side of button is out of view
-      const scrollLeft = this.tabItemContainerNode.scrollLeft + (selectedButtonLeft - tabItemContainerLeft);
-      scroll.left(this.tabItemContainerNode, scrollLeft);
-    } else if (selectedButtonRight > tabItemContainerRight) {
-      // right side of button is out of view
-      const scrollLeft = this.tabItemContainerNode.scrollLeft + (selectedButtonRight - tabItemContainerRight);
-      scroll.left(this.tabItemContainerNode, scrollLeft);
+    if (this.props.tabType !== 'fixed') {
+      if (selectedButtonLeft < tabItemContainerLeft) {
+        // left side of button is out of view
+        const scrollLeft = this.tabItemContainerNode.scrollLeft + (selectedButtonLeft - tabItemContainerLeft);
+        scroll.left(this.tabItemContainerNode, scrollLeft);
+      } else if (selectedButtonRight > tabItemContainerRight) {
+        // right side of button is out of view
+        const scrollLeft = this.tabItemContainerNode.scrollLeft + (selectedButtonRight - tabItemContainerRight);
+        scroll.left(this.tabItemContainerNode, scrollLeft);
+      }
     }
   };
 
