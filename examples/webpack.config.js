@@ -25,7 +25,7 @@ const config = {
   entry: [
     'react-hot-loader/patch',
     'webpack/hot/only-dev-server',
-    path.resolve(__dirname, 'index.js'),
+    path.resolve(__dirname, 'src', 'index.js'),
   ],
   output: {
     filename: 'app.js',
@@ -62,7 +62,7 @@ const config = {
     new webpack.DefinePlugin(defines),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.resolve(__dirname, 'index.html'),
+      template: path.resolve(__dirname, 'src', 'www', 'index.html'),
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
@@ -75,7 +75,7 @@ const config = {
   ],
   resolve: {
     modules: [
-      __dirname,
+      path.resolve(__dirname, 'src'),
       path.resolve(__dirname, 'node_modules'),
       'node_modules',
     ],

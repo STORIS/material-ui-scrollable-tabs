@@ -7,7 +7,8 @@ import scrollingSimpleCode from '!raw-loader!./ScrollingSimple';
 import ScrollingSimple from './ScrollingSimple';
 
 const descriptions = {
-  simple: 'A simple example of scrolling behavior',
+  simple: 'A simple example of scrolling behavior without desktop scroll buttons. ' +
+  'Since the labels are short, the tabs will shrink to the mimimum size of 72px.',
 };
 
 class TabPage extends Component {
@@ -17,6 +18,14 @@ class TabPage extends Component {
 
   getStyles = () => {
     const styles = {
+      root: {
+        margin: '1rem',
+      },
+      headline: {
+        fontSize: 24,
+        marginBottom: 12,
+        fontWeight: 400,
+      },
       sizeLimiter: {
         width: '100%',
         margin: '0 auto',
@@ -40,9 +49,14 @@ class TabPage extends Component {
     const styles = this.getStyles();
 
     return (
-      <div style={{margin: '24px'}}>
+      <div style={styles.root}>
+        <h2 style={styles.headline}>Tips for using examples:</h2>
+        <p>
+          Desktop Browsers: Use shift-mousewheel while hovering a tab strip to scroll the tabs horizontally.<br />
+          Mobile Browsers: Use swipe gestures on a tab strip to scroll the tabs horizontally.
+        </p>
         <CodeExample
-          title="Simple Scrolling"
+          title="Simple Scrolling (no desktop buttons)"
           description={descriptions.simple}
           code={scrollingSimpleCode}
         >

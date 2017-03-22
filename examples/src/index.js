@@ -3,8 +3,8 @@ import {render} from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import WebFont from 'webfontloader';
 
-// eslint-disable-next-line no-unused-vars
-import normalize from 'normalize.css';
+import normalize from 'normalize.css'; // eslint-disable-line no-unused-vars
+import main from 'www/css/main.css'; // eslint-disable-line no-unused-vars
 
 import app from './app';
 
