@@ -69,7 +69,7 @@ class Tabs extends Component {
      */
     inkBarStyle: PropTypes.object,
     /**
-     * Is the tab rendered on a large display?
+     * @ignore (will be deprecated by next release)
      */
     isLargeView: PropTypes.bool,
     /**
@@ -93,7 +93,7 @@ class Tabs extends Component {
      */
     tabTemplateStyle: PropTypes.object,
     /**
-     * What type of tab component is this?
+     * The type of tab component.
      */
     tabType: PropTypes.oneOf(['fixed', 'scrollable', 'scrollable-buttons']),
     /**
