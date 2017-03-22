@@ -84,6 +84,10 @@ class TabPage extends Component {
 
     return (
       <div style={styles.root}>
+        <p>
+          For additional information and examples, please visit the&nbsp;
+          <a href="http://www.material-ui.com/#/components/tabs">Material-UI Tabs</a>&nbsp;documentation page.
+        </p>
         <h2 style={styles.headline}>Tips for using examples:</h2>
         <p>
           Desktop Browsers: Use shift-mousewheel or click the mousewheel while hovering a tab strip to scroll the
