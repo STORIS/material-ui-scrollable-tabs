@@ -25,7 +25,7 @@ const config = {
   entry: [
     'react-hot-loader/patch',
     'webpack/hot/only-dev-server',
-    path.join(__dirname, 'index.js'),
+    path.resolve(__dirname, 'index.js'),
   ],
   output: {
     filename: 'app.js',
@@ -62,7 +62,7 @@ const config = {
     new webpack.DefinePlugin(defines),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.join(__dirname, 'index.html'),
+      template: path.resolve(__dirname, 'index.html'),
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
@@ -74,8 +74,15 @@ const config = {
     new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
-    modules: ['node_modules', './examples/src'],
-    extensions: ['.js', '.jsx'],
+    modules: [
+      __dirname,
+      path.resolve(__dirname, 'node_modules'),
+      'node_modules',
+    ],
+    extensions: [
+      '.js',
+      '.jsx',
+    ],
     alias: {
       'material-ui-scrollable-tabs': path.resolve(__dirname, '../src'),
     },
