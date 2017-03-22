@@ -25,7 +25,7 @@ const getStyles = (props, context, state) => {
       backgroundColor: tabs.backgroundColor,
     },
     scrollButtonIcon: {
-      color: tabs.textColor,
+      color: tabs.selectedTextColor,
       fontSize: 24,
     },
     tabItemContainer: {
@@ -69,7 +69,7 @@ class Tabs extends Component {
      */
     inkBarStyle: PropTypes.object,
     /**
-     * Is the tab rendered on a large display?
+     * Indicates that the tab bar is rendered on a large view and should use the wider stylings.
      */
     isLargeView: PropTypes.bool,
     /**
@@ -93,7 +93,13 @@ class Tabs extends Component {
      */
     tabTemplateStyle: PropTypes.object,
     /**
-     * What type of tab component is this?
+     * The type of tab component:
+     *
+     * `fixed` will fill the container and each tab will be the same size.
+     *
+     * `scrollable` will invoke scrolling properties and allow for horizontally scrolling (or swiping) the tab bar.
+     *
+     * `scrollable-buttons` adds clickable buttons to a scrollable tab bar.
      */
     tabType: PropTypes.oneOf(['fixed', 'scrollable', 'scrollable-buttons']),
     /**

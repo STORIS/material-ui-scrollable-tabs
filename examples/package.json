@@ -1,0 +1,74 @@
+{
+  "name": "material-ui-scrollable-tabs-examples",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Example projects for material-ui-scrollable-tabs",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "STORIS",
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.23.0",
+    "highlight.js": "^9.10.0",
+    "marked": "^0.3.6",
+    "material-ui": "^0.17.1",
+    "normalize.css": "^5.0.0",
+    "react": "^15.4.2",
+    "react-docgen": "^2.13.0",
+    "react-dom": "^15.4.2",
+    "react-tap-event-plugin": "^2.0.1",
+    "webfontloader": "^1.6.27"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.2.2",
+    "babel-preset-react": "^6.23.0",
+    "cross-env": "^3.2.4",
+    "css-loader": "^0.27.3",
+    "dotenv": "^4.0.0",
+    "eslint": "^3.18.0",
+    "eslint-import-resolver-webpack": "^0.8.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-react": "^6.10.2",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "html-webpack-plugin": "^2.28.0",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "style-loader": "^0.14.1",
+    "webpack": "^2.2.1",
+    "webpack-combine-loaders": "^2.0.3",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ],
+    "plugins": [
+      "transform-class-properties",
+      "transform-object-rest-spread",
+      "transform-runtime"
+    ],
+    "env": {
+      "development": {
+        "presets": []
+      },
+      "production": {
+        "presets": []
+      },
+      "test": {
+        "presets": []
+      }
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
