@@ -11,9 +11,15 @@ import longLabelsCode from '!raw-loader!./LongLabels';
 import LongLabels from './LongLabels';
 import multiLineLabelsCode from '!raw-loader!./MultiLineLabels';
 import MultiLineLabels from './MultiLineLabels';
+import fixedSimpleCode from '!raw-loader!./FixedSimple';
+import FixedSimple from './FixedSimple';
+import fixedMaxSizeCode from '!raw-loader!./FixedMaxSize';
+import FixedMaxSize from './FixedMaxSize';
+import fixedMinSizeCode from '!raw-loader!./FixedMinSize';
+import FixedMinSize from './FixedMinSize';
 
 const descriptions = {
-  simple: 'A simple example of scrolling behavior without desktop scroll buttons. ' +
+  scrollingSimple: 'A simple example of scrolling behavior without desktop scroll buttons. ' +
   'If a tab isn\'t fully in view, clicking it will smoothly slide it into view. ' +
   'Since the labels are short, the tabs will shrink to the mimimum size of 72px.',
   simpleDesktop: 'A simple example of scrolling behavior with desktop scroll buttons. ' +
@@ -24,6 +30,15 @@ const descriptions = {
   'On webkit based browsers, the text will clamp at the end of the first line with an ellipsis. ' +
   'However, on non-webkit based browsers, the text will wrap until it fills the button\'s height. ' +
   'This wrapping behavior is against material design standards and you should not use labels which wrap.',
+  multiLineLabels: 'Tabs with long labels can be allowed to wrap to a second line. This will shrink the ' +
+  'font size.',
+  fixedSimple: 'A simple example of fixed tabs (no scrolling).  Fixed tabs will be evenly sized based ' +
+  'on the width of their container.  They will still shrink no smaller than the minimum tab size nor ' +
+  'grow larger than the maximum tab size',
+  fixedMaxSize: 'If fixed tabs hit their maximum size, they will be left-aligned within the container ' +
+  'and the remainder of the container will not contain any tabs.',
+  fixedMinSize: 'If fixed tabs shrink to their minimum size, they will overflow their container and the ' +
+  'remaining tabs will be inaccessible.',
 };
 
 class TabPage extends Component {
@@ -67,12 +82,12 @@ class TabPage extends Component {
       <div style={styles.root}>
         <h2 style={styles.headline}>Tips for using examples:</h2>
         <p>
-          Desktop Browsers: Use shift-mousewheel while hovering a tab strip to scroll the tabs horizontally.<br />
+          Desktop Browsers: Use shift-mousewheel or click the mousewheel while hovering a tab strip to scroll the tabs horizontally.<br />
           Mobile Browsers: Use swipe gestures on a tab strip to scroll the tabs horizontally.
         </p>
         <CodeExample
           title="Simple Scrolling (no desktop buttons)"
-          description={descriptions.simple}
+          description={descriptions.scrollingSimple}
           code={scrollingSimpleCode}
         >
           <div style={styles.sizeLimiter}>
@@ -104,6 +119,33 @@ class TabPage extends Component {
         >
           <div style={styles.sizeLimiter}>
             <MultiLineLabels />
+          </div>
+        </CodeExample>
+        <CodeExample
+          title="Simple Fixed"
+          description={descriptions.fixedSimple}
+          code={fixedSimpleCode}
+        >
+          <div style={styles.sizeLimiter}>
+            <FixedSimple />
+          </div>
+        </CodeExample>
+        <CodeExample
+          title="Fixed Maximum Size"
+          description={descriptions.fixedMaxSize}
+          code={fixedMaxSizeCode}
+        >
+          <div style={styles.sizeLimiter}>
+            <FixedMaxSize />
+          </div>
+        </CodeExample>
+        <CodeExample
+          title="Fixed Minimum Size"
+          description={descriptions.fixedMinSize}
+          code={fixedMinSizeCode}
+        >
+          <div style={styles.sizeLimiter}>
+            <FixedMinSize />
           </div>
         </CodeExample>
       </div>
