@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import marked from 'marked';
 
-require('./mui-github-markdown.css');
+import muiGitHubMarkdownStyles from './mui-github-markdown.css';
 
 const styles = {
   root: {
@@ -47,7 +47,7 @@ class MarkdownElement extends Component {
     return (
       <div
         style={Object.assign({}, styles.root, style)}
-        className="markdown-body"
+        className={muiGitHubMarkdownStyles['markdown-body']}
         dangerouslySetInnerHTML={{__html: marked(text)}}
       />
     );

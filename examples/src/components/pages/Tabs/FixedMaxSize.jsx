@@ -25,7 +25,7 @@ const FixedMaxSize = () => (
     >
       <div>
         <h2 style={styles.headline}>Tab Two</h2>
-        <p>This is the second tab.</p>
+        <p>This is the second tab.  My tab doesn't fill the entire container.</p>
       </div>
     </Tab>
   </Tabs>

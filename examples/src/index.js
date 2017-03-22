@@ -40,6 +40,7 @@ const webFontConfig = {
   classes: false,
   timeout: 1000,
   active: webfontCb,
+  inactive: webfontCb,
 };
 
 WebFont.load(webFontConfig);

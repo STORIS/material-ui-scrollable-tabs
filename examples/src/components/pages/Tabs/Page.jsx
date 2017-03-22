@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth';
 
 import CodeExample from '../../CodeExample';
+import PropTypeDescription from '../../PropTypeDescription';
 
 import scrollingSimpleCode from '!raw-loader!./ScrollingSimple';
 import ScrollingSimple from './ScrollingSimple';
@@ -17,6 +18,9 @@ import fixedMaxSizeCode from '!raw-loader!./FixedMaxSize';
 import FixedMaxSize from './FixedMaxSize';
 import fixedMinSizeCode from '!raw-loader!./FixedMinSize';
 import FixedMinSize from './FixedMinSize';
+
+import tabsCode from '!raw-loader!material-ui-scrollable-tabs/Tabs/Tabs';
+import tabCode from '!raw-loader!material-ui-scrollable-tabs/Tabs/Tab';
 
 const descriptions = {
   scrollingSimple: 'A simple example of scrolling behavior without desktop scroll buttons. ' +
@@ -82,7 +86,8 @@ class TabPage extends Component {
       <div style={styles.root}>
         <h2 style={styles.headline}>Tips for using examples:</h2>
         <p>
-          Desktop Browsers: Use shift-mousewheel or click the mousewheel while hovering a tab strip to scroll the tabs horizontally.<br />
+          Desktop Browsers: Use shift-mousewheel or click the mousewheel while hovering a tab strip to scroll the
+          tabs horizontally.<br />
           Mobile Browsers: Use swipe gestures on a tab strip to scroll the tabs horizontally.
         </p>
         <CodeExample
@@ -148,6 +153,8 @@ class TabPage extends Component {
             <FixedMinSize />
           </div>
         </CodeExample>
+        <PropTypeDescription code={tabsCode} header="### Tabs Properties" />
+        <PropTypeDescription code={tabCode} header="### Tab Properties" />
       </div>
     );
   }
