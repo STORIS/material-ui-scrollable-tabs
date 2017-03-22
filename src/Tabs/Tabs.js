@@ -69,7 +69,7 @@ class Tabs extends Component {
      */
     inkBarStyle: PropTypes.object,
     /**
-     * @ignore (will be deprecated by next release)
+     * Indicates that the tab bar is rendered on a large view and should use the wider stylings.
      */
     isLargeView: PropTypes.bool,
     /**
@@ -93,7 +93,13 @@ class Tabs extends Component {
      */
     tabTemplateStyle: PropTypes.object,
     /**
-     * The type of tab component.
+     * The type of tab component:
+     *
+     * `fixed` will fill the container and each tab will be the same size.
+     *
+     * `scrollable` will invoke scrolling properties and allow for horizontally scrolling (or swiping) the tab bar.
+     *
+     * `scrollable-buttons` adds clickable buttons to a scrollable tab bar.
      */
     tabType: PropTypes.oneOf(['fixed', 'scrollable', 'scrollable-buttons']),
     /**
