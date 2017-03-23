@@ -73,7 +73,7 @@ class Tab extends Component {
      */
     isLargeView: PropTypes.bool,
     /**
-     * Are there multiple lines of text?
+     * Indicates that the tab should render with the mutliple lines of text styling.
      */
     isMultiLine: PropTypes.bool,
     /**
