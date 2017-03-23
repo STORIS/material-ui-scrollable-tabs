@@ -10,7 +10,7 @@ After cloning the repository, install dependencies:
 ```sh
 cd <project folder>/material-ui-scrollable-tabs
 npm install
-cd <project folder>//material-ui-scrollable-tabs/examples
+cd <project folder>/material-ui-scrollable-tabs/examples
 npm install
 ```
 
