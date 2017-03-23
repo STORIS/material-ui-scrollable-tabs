@@ -8,6 +8,7 @@ import React, {
 import EventListener from 'react-event-listener';
 import warning from 'warning';
 import scroll from 'scroll';
+import withWidth, {LARGE} from 'material-ui/utils/withWidth';
 import TabTemplate from './TabTemplate';
 import InkBar from './InkBar';
 import ScrollButton from './ScrollButton';
@@ -69,10 +70,6 @@ class Tabs extends Component {
      */
     inkBarStyle: PropTypes.object,
     /**
-     * Indicates that the tab bar is rendered on a large view and should use the wider stylings.
-     */
-    isLargeView: PropTypes.bool,
-    /**
      * Called when the selected value change.
      */
     onChange: PropTypes.func,
@@ -106,12 +103,15 @@ class Tabs extends Component {
      * Makes Tabs controllable and selects the tab whose value prop matches this prop.
      */
     value: PropTypes.any,
+    /**
+     * @ignore
+     */
+    width: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
     initialSelectedIndex: 0,
     onChange: () => {},
-    isLargeView: false,
     tabType: 'fixed',
   };
 
@@ -120,6 +120,8 @@ class Tabs extends Component {
   };
 
   state = {
+    selectedTabLeft: 0,
+    selectedTabWidth: 0,
     offsetY: 0,
     selectedIndex: 0,
   };
@@ -284,19 +286,29 @@ class Tabs extends Component {
       this.state.selectedIndex === index;
   }
 
+  setMeasurements = (tabWidth, tabLeft) => {
+    if (tabWidth !== this.state.selectedTabWidth || tabLeft !== this.state.selectedTabLeft) {
+      // debugger;
+      this.setState({
+        selectedTabWidth: tabWidth,
+        selectedTabLeft: tabLeft,
+      });
+    }
+  };
+
   render() {
     const {
       contentContainerClassName,
       contentContainerStyle,
       initialSelectedIndex, // eslint-disable-line no-unused-vars
       inkBarStyle,
-      isLargeView,
       onChange, // eslint-disable-line no-unused-vars
       style,
       tabItemContainerStyle,
       tabTemplate,
       tabTemplateStyle,
       tabType,
+      width,
       ...other
     } = this.props;
 
@@ -333,7 +345,8 @@ class Tabs extends Component {
         height: tab.props.height || tabHeight,
         width: (tabType === 'fixed') ? `${fixedWidth}%` : 'auto',
         onTouchTap: this.handleTabTouchTap,
-        isLargeView,
+        isLargeView: (width === LARGE),
+        onLoad: this.setMeasurements,
         ref: (tabComponent) => this.tabComponentList[index] = tabComponent,
       });
     });
@@ -346,8 +359,10 @@ class Tabs extends Component {
     if (this.state.selectedIndex !== -1 && this.tabComponentList[this.state.selectedIndex] instanceof React.Component) {
       const containerXOffset = this.tabItemContainerNode ?
         this.tabItemContainerNode.scrollLeft - this.tabItemContainerNode.getBoundingClientRect().left : 0;
-      inkBarLeft = this.tabComponentList[this.state.selectedIndex].getLeft() + containerXOffset;
-      inkBarWidth = this.tabComponentList[this.state.selectedIndex].getWidth();
+      // inkBarLeft = this.tabComponentList[this.state.selectedIndex].getLeft() + containerXOffset;
+      // inkBarWidth = this.tabComponentList[this.state.selectedIndex].getWidth();
+      inkBarLeft = this.state.selectedTabLeft + containerXOffset;
+      inkBarWidth = this.state.selectedTabWidth;
     }
 
     const inkBar = (
@@ -412,4 +427,4 @@ class Tabs extends Component {
   }
 }
 
-export default Tabs;
+export default withWidth()(Tabs);

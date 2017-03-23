@@ -89,6 +89,12 @@ class Tab extends Component {
     onActive: PropTypes.func,
     /**
      * @ignore
+     * Callback function executed in componentDidMount and componentDidUpdate
+     * This property is overriden by the Tabs component.
+     */
+    onLoad: PropTypes.func,
+    /**
+     * @ignore
      * This property is overriden by the Tabs component.
      */
     onTouchTap: PropTypes.func,
@@ -122,6 +128,28 @@ class Tab extends Component {
   static contextTypes = {
     muiTheme: PropTypes.object.isRequired,
   };
+
+  componentDidMount() {
+    this.setMeasurements();
+  }
+
+  componentDidUpdate() {
+    this.setMeasurements();
+  }
+
+  setMeasurements = () => {
+    const {
+      selected,
+      onLoad,
+    } = this.props;
+
+    if (selected) {
+      const boundingClientRect = this.buttonComponent.button.getBoundingClientRect();
+      const tabLeft = boundingClientRect.left;
+      const tabWidth = boundingClientRect.width;
+      onLoad(tabWidth, tabLeft);
+    }
+  }
 
   getLeft() {
     return this.buttonComponent.button.getBoundingClientRect().left;
