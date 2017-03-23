@@ -8,7 +8,9 @@ serve as a guide laying out the framework for those goals:
 - [x] Post repository to github
 - [x] Add comment to Material-UI issues log referencing this feature
 - [x] Post package to npm
-- [ ] Create examples of use
+- [x] Create examples of use
+- [ ] Deprecate isLargeView prop in favor of automatic detection of view size
+- [ ] Refactor scrollbar measurements as separate react component or module
 - [ ] Get listed as related project of Material-UI
 - [ ] Create _next_ branch of this project based on Material-UI next branch
 - [ ] Merge _next_ branch of this project into Material-UI next branch
