@@ -254,18 +254,26 @@ class Tabs extends Component {
       valueLink.requestChange(value, event, tab);
     }
 
-    this.setState({
-      selectedIndex: index,
-    });
-
     if (tab.props.onActive) {
       tab.props.onActive(tab);
     }
 
+    this.scrollIntoView(index, tab);
+
+    if (index !== this.state.selectedIndex) {
+      this.setState({
+        selectedIndex: index,
+      });
+    }
+  };
+
+  scrollIntoView = (index, tab) => {
+    tab.setMeasurements(); // make sure they are up to date
+
     const tabItemContainerLeft = this.tabItemContainerNode.getBoundingClientRect().left;
     const tabItemContainerRight = this.tabItemContainerNode.getBoundingClientRect().right;
-    const selectedButtonLeft = this.tabComponentList[index].getLeft();
-    const selectedButtonRight = selectedButtonLeft + this.tabComponentList[index].getWidth();
+    const selectedButtonLeft = this.tabComponentList[index].measurements.tabLeft;
+    const selectedButtonRight = selectedButtonLeft + this.tabComponentList[index].measurements.tabWidth;
 
     if (this.props.tabType !== 'fixed') {
       if (selectedButtonLeft < tabItemContainerLeft) {
@@ -278,7 +286,7 @@ class Tabs extends Component {
         scroll.left(this.tabItemContainerNode, scrollLeft);
       }
     }
-  };
+  }
 
   getSelected(tab, index) {
     const valueLink = this.getValueLink(this.props);
@@ -286,12 +294,11 @@ class Tabs extends Component {
       this.state.selectedIndex === index;
   }
 
-  setMeasurements = (tabWidth, tabLeft) => {
-    if (tabWidth !== this.state.selectedTabWidth || tabLeft !== this.state.selectedTabLeft) {
-      // debugger;
+  setMeasurements = (measurements) => {
+    if (measurements.tabWidth !== this.state.selectedTabWidth || measurements.tabLeft !== this.state.selectedTabLeft) {
       this.setState({
-        selectedTabWidth: tabWidth,
-        selectedTabLeft: tabLeft,
+        selectedTabWidth: measurements.tabWidth,
+        selectedTabLeft: measurements.tabLeft,
       });
     }
   };
@@ -346,7 +353,7 @@ class Tabs extends Component {
         width: (tabType === 'fixed') ? `${fixedWidth}%` : 'auto',
         onTouchTap: this.handleTabTouchTap,
         isLargeView: (width === LARGE),
-        onLoad: this.setMeasurements,
+        onSelectedLoad: this.setMeasurements,
         ref: (tabComponent) => this.tabComponentList[index] = tabComponent,
       });
     });
@@ -359,8 +366,6 @@ class Tabs extends Component {
     if (this.state.selectedIndex !== -1 && this.tabComponentList[this.state.selectedIndex] instanceof React.Component) {
       const containerXOffset = this.tabItemContainerNode ?
         this.tabItemContainerNode.scrollLeft - this.tabItemContainerNode.getBoundingClientRect().left : 0;
-      // inkBarLeft = this.tabComponentList[this.state.selectedIndex].getLeft() + containerXOffset;
-      // inkBarWidth = this.tabComponentList[this.state.selectedIndex].getWidth();
       inkBarLeft = this.state.selectedTabLeft + containerXOffset;
       inkBarWidth = this.state.selectedTabWidth;
     }

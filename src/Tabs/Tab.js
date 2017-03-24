@@ -92,7 +92,7 @@ class Tab extends Component {
      * Callback function executed in componentDidMount and componentDidUpdate
      * This property is overriden by the Tabs component.
      */
-    onLoad: PropTypes.func,
+    onSelectedLoad: PropTypes.func,
     /**
      * @ignore
      * This property is overriden by the Tabs component.
@@ -130,33 +130,35 @@ class Tab extends Component {
   };
 
   componentDidMount() {
-    this.setMeasurements();
+    this.handleComponentUpdate();
   }
 
   componentDidUpdate() {
-    this.setMeasurements();
+    this.handleComponentUpdate();
   }
 
-  setMeasurements = () => {
+  measurements = {
+    tabLeft: 0,
+    tabWidth: 0,
+  }
+
+  handleComponentUpdate = () => {
+    this.setMeasurements();
     const {
       selected,
-      onLoad,
+      onSelectedLoad,
     } = this.props;
-
     if (selected) {
-      const boundingClientRect = this.buttonComponent.button.getBoundingClientRect();
-      const tabLeft = boundingClientRect.left;
-      const tabWidth = boundingClientRect.width;
-      onLoad(tabWidth, tabLeft);
+      onSelectedLoad(this.measurements);
     }
   }
 
-  getLeft() {
-    return this.buttonComponent.button.getBoundingClientRect().left;
-  }
-
-  getWidth() {
-    return this.buttonComponent.button.getBoundingClientRect().width;
+  setMeasurements = () => {
+    const boundingClientRect = this.buttonComponent.button.getBoundingClientRect();
+    this.measurements = {
+      tabLeft: boundingClientRect.left,
+      tabWidth: boundingClientRect.width,
+    };
   }
 
   handleTouchTap = (event) => {
@@ -177,6 +179,7 @@ class Tab extends Component {
       buttonStyle,
       isLargeView, // eslint-disable-line no-unused-vars
       isMultiLine, // eslint-disable-line no-unused-vars
+      onSelectedLoad, // eslint-disable-line no-unused-vars
       style,
       value, // eslint-disable-line no-unused-vars
       height, // eslint-disable-line no-unused-vars
