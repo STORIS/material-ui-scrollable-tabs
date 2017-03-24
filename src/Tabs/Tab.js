@@ -89,6 +89,12 @@ class Tab extends Component {
     onActive: PropTypes.func,
     /**
      * @ignore
+     * Callback function executed in componentDidMount and componentDidUpdate
+     * This property is overriden by the Tabs component.
+     */
+    onSelectedLoad: PropTypes.func,
+    /**
+     * @ignore
      * This property is overriden by the Tabs component.
      */
     onTouchTap: PropTypes.func,
@@ -123,12 +129,36 @@ class Tab extends Component {
     muiTheme: PropTypes.object.isRequired,
   };
 
-  getLeft() {
-    return this.buttonComponent.button.getBoundingClientRect().left;
+  componentDidMount() {
+    this.handleComponentUpdate();
   }
 
-  getWidth() {
-    return this.buttonComponent.button.getBoundingClientRect().width;
+  componentDidUpdate() {
+    this.handleComponentUpdate();
+  }
+
+  measurements = {
+    tabLeft: 0,
+    tabWidth: 0,
+  }
+
+  handleComponentUpdate = () => {
+    this.setMeasurements();
+    const {
+      selected,
+      onSelectedLoad,
+    } = this.props;
+    if (selected) {
+      onSelectedLoad(this.measurements);
+    }
+  }
+
+  setMeasurements = () => {
+    const boundingClientRect = this.buttonComponent.button.getBoundingClientRect();
+    this.measurements = {
+      tabLeft: boundingClientRect.left,
+      tabWidth: boundingClientRect.width,
+    };
   }
 
   handleTouchTap = (event) => {
@@ -149,6 +179,7 @@ class Tab extends Component {
       buttonStyle,
       isLargeView, // eslint-disable-line no-unused-vars
       isMultiLine, // eslint-disable-line no-unused-vars
+      onSelectedLoad, // eslint-disable-line no-unused-vars
       style,
       value, // eslint-disable-line no-unused-vars
       height, // eslint-disable-line no-unused-vars
