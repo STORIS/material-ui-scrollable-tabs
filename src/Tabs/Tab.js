@@ -218,7 +218,9 @@ class Tab extends Component {
         focusRippleOpacity={rippleOpacity}
         touchRippleOpacity={rippleOpacity}
         onTouchTap={this.handleTouchTap}
-        ref={(buttonComponent) => this.buttonComponent = buttonComponent}
+        ref={(buttonComponent) => {
+          this.buttonComponent = buttonComponent;
+        }}
       >
         <div style={Object.assign(styles.button, buttonStyle)} >
           {iconElement}

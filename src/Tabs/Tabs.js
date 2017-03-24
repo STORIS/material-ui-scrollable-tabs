@@ -350,7 +350,9 @@ class Tabs extends Component {
         onTouchTap: this.handleTabTouchTap,
         isLargeView: (width === LARGE),
         onSelectedLoad: this.setMeasurements,
-        ref: (tabComponent) => this.tabComponentList[index] = tabComponent,
+        ref: (tabComponent) => {
+          this.tabComponentList[index] = tabComponent;
+        },
       });
     });
 
@@ -401,7 +403,9 @@ class Tabs extends Component {
             }
             <div
               style={prepareStyles(Object.assign(styles.tabItemContainer, tabItemContainerStyle))}
-              ref={(node) => this.tabItemContainerNode = node}
+              ref={(node) => {
+                this.tabItemContainerNode = node;
+              }}
             >
               {tabs}
               {inkBar}
