@@ -25,10 +25,6 @@ const getStyles = (props, context, state) => {
       overflow: 'hidden',
       backgroundColor: tabs.backgroundColor,
     },
-    scrollButtonIcon: {
-      color: tabs.selectedTextColor,
-      fontSize: 24,
-    },
     tabItemContainer: {
       flex: '1 1 auto',
       width: (tabType === 'fixed') ? '100%' : 'auto',

@@ -22,7 +22,7 @@ const getStyles = (props, context) => {
       height,
     },
     icon: {
-      color: tabs.textColor,
+      color: tabs.selectedTextColor,
       fontSize: 24,
     },
   };
