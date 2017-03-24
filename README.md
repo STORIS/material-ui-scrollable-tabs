@@ -48,8 +48,7 @@ In addition to those documented by Material-UI, this package offers the followin
 ### Tabs Properties
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| isLargeView | bool | false | Set to true if the component is being rendered on a large width viewport and should adhere to material design's large tab standards. |
-| tabType | enum:<br />'fixed'<br />'scrollable'<br />'scrollable-buttons' | 'fixed' | See descriptions of enumerations below. |
+| tabType | enum:<br />`fixed`<br />`scrollable`<br />`scrollable-buttons` | `fixed` | See descriptions of enumerations below. |
 
 #### TabTypes
 ##### Fixed
