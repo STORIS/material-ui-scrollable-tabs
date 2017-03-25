@@ -8,12 +8,11 @@ import React, {
 import EventListener from 'react-event-listener';
 import warning from 'warning';
 import scroll from 'scroll';
+import ScrollbarSize from 'react-scrollbar-size';
 import withWidth, {LARGE} from 'material-ui/utils/withWidth';
 import TabTemplate from './TabTemplate';
 import InkBar from './InkBar';
 import ScrollButton from './ScrollButton';
-
-import getScrollbarHeight from '../utils/scrollbarHeight';
 
 const getStyles = (props, context, state) => {
   const {tabType} = props;
@@ -122,12 +121,6 @@ class Tabs extends Component {
     selectedIndex: 0,
   };
 
-  componentWillMount() {
-    this.setState({
-      offsetY: this.getOffsetY(),
-    });
-  }
-
   componentDidMount() {
     const valueLink = this.getValueLink(this.props);
     const initialIndex = this.props.initialSelectedIndex;
@@ -174,10 +167,6 @@ class Tabs extends Component {
         showRightScroll,
       });
     }
-  }
-
-  getOffsetY() {
-    return ((this.props.tabType === 'fixed') ? '0px' : -getScrollbarHeight());
   }
 
   getTabs(props = this.props) {
@@ -234,11 +223,13 @@ class Tabs extends Component {
   }
 
   handleResize = () => {
-    this.setState({
-      offsetY: this.getOffsetY(),
-    });
-
     this.calculateShowScroll();
+  }
+
+  handleScrollbarSizeChange = ({scrollbarHeight}) => {
+    this.setState({
+      offsetY: -scrollbarHeight,
+    });
   }
 
   handleTabTouchTap = (value, event, tab) => {
@@ -380,15 +371,25 @@ class Tabs extends Component {
 
     return (
       <div style={prepareStyles(Object.assign({}, style))} {...other}>
-        <EventListener
-          target="window"
-          onResize={this.handleResize}
-        />
+        {(tabType === 'scrollable-buttons') ?
+          <EventListener
+            target="window"
+            onResize={this.handleResize}
+          /> :
+          null
+        }
         {this.tabItemContainerNode &&
           <EventListener
             target={this.tabItemContainerNode}
             onScroll={this.handleOnScroll}
           />
+        }
+        {tabType !== 'fixed' ?
+          <ScrollbarSize
+            onLoad={this.handleScrollbarSizeChange}
+            onChange={this.handleScrollbarSizeChange}
+          /> :
+          null
         }
         <div style={prepareStyles(Object.assign({}, styles.root))}>
           <div style={{display: 'flex'}}>
