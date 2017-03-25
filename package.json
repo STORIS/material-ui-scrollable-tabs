@@ -24,9 +24,7 @@
   "homepage": "http://material-ui.com/",
   "scripts": {
     "build": "npm run build:babel && npm run build:copy-files",
-    "build:babel": "npm run build:babel-tabs && npm run build:babel-utils",
-    "build:babel-tabs": "cross-env NODE_ENV=release babel ./src/Tabs --out-dir ./build/Tabs --ignore spec.js",
-    "build:babel-utils": "cross-env NODE_ENV=release babel ./src/utils --out-dir ./build/utils --ignore spec.js",
+    "build:babel": "cross-env NODE_ENV=release babel ./src --out-dir ./build --ignore spec.js",
     "build:copy-files": "babel-node ./scripts/copy-files.js",
     "clean:build": "rimraf build",
     "prebuild": "npm run clean:build"
