@@ -119,15 +119,17 @@ class Tab extends Component {
   };
 
   getMeasurements = () => {
-    const boundingClientRect = this.buttonComponent.button.getBoundingClientRect();
-    return {
-      top: boundingClientRect.top,
-      bottom: boundingClientRect.bottom,
-      left: boundingClientRect.left,
-      right: boundingClientRect.right,
-      height: boundingClientRect.height,
-      width: boundingClientRect.width,
-    };
+    if (this.buttonComponent.button instanceof Element) {
+      const boundingClientRect = this.buttonComponent.button.getBoundingClientRect();
+      return {
+        top: boundingClientRect.top,
+        bottom: boundingClientRect.bottom,
+        left: boundingClientRect.left,
+        right: boundingClientRect.right,
+        height: boundingClientRect.height,
+        width: boundingClientRect.width,
+      };
+    } else return {};
   }
 
   handleTouchTap = (event) => {
