@@ -219,15 +219,11 @@ class Tabs extends Component {
   }
 
   handleLeftScrollTouchTap = () => {
-    const scrollLeft = this.tabItemContainerNode.scrollLeft - this.tabItemContainerNode.clientWidth;
-    scroll.left(this.tabItemContainerNode, scrollLeft);
-    this.calculateShowScroll();
+    this.moveTabsScroll(-this.tabItemContainerNode.clientWidth);
   }
 
   handleRightScrollTouchTap = () => {
-    const scrollLeft = this.tabItemContainerNode.scrollLeft + this.tabItemContainerNode.clientWidth;
-    scroll.left(this.tabItemContainerNode, scrollLeft);
-    this.calculateShowScroll();
+    this.moveTabsScroll(this.tabItemContainerNode.clientWidth);
   }
 
   handleResize = () => {
@@ -264,6 +260,12 @@ class Tabs extends Component {
       });
     }
   };
+
+  moveTabsScroll = (delta) => {
+    const scrollLeft = this.tabItemContainerNode.scrollLeft + delta;
+    scroll.left(this.tabItemContainerNode, scrollLeft);
+    this.calculateShowScroll();
+  }
 
   scrollIntoView = (index, tab) => {
     tab.setMeasurements(); // make sure they are up to date
