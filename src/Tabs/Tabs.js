@@ -108,54 +108,117 @@ class Tabs extends Component {
 
   state = {
     offsetY: 0,
-    selectedTab: {
-      index: 0,
-      left: 0,
-      width: 0,
-    },
+    selectedIndex: 0,
+    showLeftScroll: false,
+    showRightScroll: false,
   };
 
-  componentDidMount() {
-    const initialIndex = this.props.initialSelectedIndex;
-    /**
-     * setting inkbar position and width requires the DOM to have been rendered so
-     * multiple renderings will be required when mounting
-     */
-    this.setState({ // eslint-disable-line react/no-did-mount-set-state
-      selectedTab: {
-        ...this.state.selectedTab,
-        index: initialIndex < this.getTabCount() ?
-            initialIndex :
-            0,
-      },
-    });
-
-    this.calculateShowScroll();
+  componentWillMount() {
+    const {
+      initialSelectedIndex,
+    } = this.props;
+    if (initialSelectedIndex) {
+      this.updateSelectedIndexState(initialSelectedIndex);
+    }
   }
 
-  componentWillReceiveProps(newProps, nextContext) {
-    const newState = {
-      muiTheme: nextContext.muiTheme || this.context.muiTheme,
-    };
+  componentDidMount() {
+    /**
+     * The size and position of the indicator is tied to the size and position of the selected tab. The
+     * selected tab's size and position cannot be determined until it has been rendered.  Therefore, after
+     * mounting the tabs container (and therefore mounting the selected tab) we will force an update of
+     * the tabs container to cause another render of the indicator with the appropriate size and width.
+     */
+    this.forceUpdate();
+    /**
+     * Now that the tab strip has been fully rendered, determine if the scroll buttons should be shown.
+     */
+    this.setScrollButtonState();
+    /**
+     * Now that everything is sized correctly, make sure the selected tab is scrolled into view
+     */
+    this.scrollSelectedIntoView(this.state.selectedIndex);
+  }
 
-    this.setState(newState);
+  componentWillReceiveProps({initialSelectedIndex}) {
+    if (initialSelectedIndex !== this.props.initialSelectedIndex) {
+      this.updateSelectedIndexState(initialSelectedIndex);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    /**
+     * If the withWidth decorator changes the viewport size then it's likely the selected tab changed size as well.
+     * This means the indicator will not be the appropriate size any longer.  Force another update to ensure the
+     * indicator renders at the proper size.
+     */
+    if (this.props.width !== prevProps.width) {
+      this.forceUpdate();
+    }
   }
 
   tabComponentList = [];
 
-  calculateShowScroll = () => {
-    const showLeftScroll = this.tabItemContainerNode.scrollLeft > 0;
-    const showRightScroll = (
-      this.tabItemContainerNode.scrollWidth >
-      this.tabItemContainerNode.clientWidth + this.tabItemContainerNode.scrollLeft
-    );
+  handleLeftScrollTouchTap = () => {
+    this.moveTabsScroll(-this.tabItemContainerNode.clientWidth);
+  }
 
-    if (showLeftScroll !== this.state.showLeftScroll || showRightScroll !== this.state.showRightScroll) {
+  handleRightScrollTouchTap = () => {
+    this.moveTabsScroll(this.tabItemContainerNode.clientWidth);
+  }
+
+  handleContainerScroll = () => {
+    this.setScrollButtonState();
+  }
+
+  handleWindowResize = () => {
+    this.setScrollButtonState();
+  }
+
+  handleScrollbarSizeChange = ({scrollbarHeight}) => {
+    this.setState({
+      offsetY: -scrollbarHeight,
+    });
+  }
+
+  handleTabTouchTap = (tab) => {
+    const {
+      index,
+      onActive,
+    } = tab.props;
+
+    if (onActive) {
+      onActive(tab);
+    }
+
+    this.scrollSelectedIntoView(index);
+
+    if (index !== this.state.selectedIndex) {
       this.setState({
-        showLeftScroll,
-        showRightScroll,
+        selectedIndex: index,
       });
     }
+  };
+
+  getSelected(tab, index) {
+    return this.state.selectedIndex === index;
+  }
+
+  getContainerMeasurements = () => {
+    if (this.tabItemContainerNode instanceof Element) {
+      const boundingClientRect = this.tabItemContainerNode.getBoundingClientRect();
+      return {
+        top: boundingClientRect.top,
+        bottom: boundingClientRect.bottom,
+        left: boundingClientRect.left,
+        right: boundingClientRect.right,
+        height: boundingClientRect.height,
+        width: boundingClientRect.width,
+        scrollLeft: this.tabItemContainerNode.scrollLeft,
+        scrollWidth: this.tabItemContainerNode.scrollWidth,
+        clientWidth: this.tabItemContainerNode.clientWidth,
+      };
+    } else return {};
   }
 
   getTabs(props = this.props) {
@@ -174,89 +237,52 @@ class Tabs extends Component {
     return this.getTabs().length;
   }
 
-  handleOnScroll = () => {
-    this.calculateShowScroll();
-  }
-
-  handleLeftScrollTouchTap = () => {
-    this.moveTabsScroll(-this.tabItemContainerNode.clientWidth);
-  }
-
-  handleRightScrollTouchTap = () => {
-    this.moveTabsScroll(this.tabItemContainerNode.clientWidth);
-  }
-
-  handleResize = () => {
-    this.calculateShowScroll();
-  }
-
-  handleScrollbarSizeChange = ({scrollbarHeight}) => {
-    this.setState({
-      offsetY: -scrollbarHeight,
-    });
-  }
-
-  handleTabTouchTap = (value, event, tab) => {
-    const index = tab.props.index;
-
-    if (tab.props.onActive) {
-      tab.props.onActive(tab);
-    }
-
-    this.scrollIntoView(index, tab);
-
-    if (index !== this.state.selectedTab.index) {
-      this.setState({
-        selectedTab: {
-          ...this.state.selectedTab,
-          index,
-        },
-      });
-    }
-  };
-
   moveTabsScroll = (delta) => {
-    const scrollLeft = this.tabItemContainerNode.scrollLeft + delta;
-    scroll.left(this.tabItemContainerNode, scrollLeft);
-    this.calculateShowScroll();
+    const container = this.getContainerMeasurements();
+
+    const nextScrollLeft = container.scrollLeft + delta;
+    scroll.left(this.tabItemContainerNode, nextScrollLeft);
+    this.setScrollButtonState();
   }
 
-  scrollIntoView = (index, tab) => {
-    tab.setMeasurements(); // make sure they are up to date
-
-    const tabItemContainerLeft = this.tabItemContainerNode.getBoundingClientRect().left;
-    const tabItemContainerRight = this.tabItemContainerNode.getBoundingClientRect().right;
-    const selectedButtonLeft = this.tabComponentList[index].measurements.tabLeft;
-    const selectedButtonRight = selectedButtonLeft + this.tabComponentList[index].measurements.tabWidth;
-
+  scrollSelectedIntoView = (index) => {
     if (this.props.tabType !== 'fixed') {
-      if (selectedButtonLeft < tabItemContainerLeft) {
+      const tab = this.tabComponentList[index];
+      const selectedButton = tab.getMeasurements();
+
+      const container = this.getContainerMeasurements();
+
+      if (selectedButton.left < container.left) {
         // left side of button is out of view
-        const scrollLeft = this.tabItemContainerNode.scrollLeft + (selectedButtonLeft - tabItemContainerLeft);
-        scroll.left(this.tabItemContainerNode, scrollLeft);
-      } else if (selectedButtonRight > tabItemContainerRight) {
+        const nextScrollLeft = container.scrollLeft + (selectedButton.left - container.left);
+        scroll.left(this.tabItemContainerNode, nextScrollLeft);
+      } else if (selectedButton.right > container.right) {
         // right side of button is out of view
-        const scrollLeft = this.tabItemContainerNode.scrollLeft + (selectedButtonRight - tabItemContainerRight);
-        scroll.left(this.tabItemContainerNode, scrollLeft);
+        const nextScrollLeft = container.scrollLeft + (selectedButton.right - container.right);
+        scroll.left(this.tabItemContainerNode, nextScrollLeft);
       }
     }
   }
 
-  getSelected(tab, index) {
-    return this.state.selectedTab.index === index;
-  }
+  setScrollButtonState = () => {
+    const container = this.getContainerMeasurements();
 
-  setMeasurements = ({tabLeft, tabWidth}) => {
-    if (tabWidth !== this.state.selectedTab.width || tabLeft !== this.state.selectedTab.left) {
+    const showLeftScroll = container.scrollLeft > 0;
+    const showRightScroll = (container.scrollWidth > (container.clientWidth + container.scrollLeft));
+
+    if (showLeftScroll !== this.state.showLeftScroll || showRightScroll !== this.state.showRightScroll) {
       this.setState({
-        selectedTab: {
-          ...this.state.selectedTab,
-          left: tabLeft,
-          width: tabWidth,
-        },
+        showLeftScroll,
+        showRightScroll,
       });
     }
-  };
+  }
+
+  updateSelectedIndexState = (index) => {
+    this.setState({
+      selectedIndex: index < this.getTabCount() ? index : 0,
+    });
+  }
 
   render() {
     const {
@@ -300,7 +326,6 @@ class Tabs extends Component {
         width: (tabType === 'fixed') ? `${fixedWidth}%` : 'auto',
         onTouchTap: this.handleTabTouchTap,
         isLargeView: (width === LARGE),
-        onSelectedLoad: this.setMeasurements,
         ref: (tabComponent) => {
           this.tabComponentList[index] = tabComponent;
         },
@@ -312,11 +337,15 @@ class Tabs extends Component {
 
     let inkBarLeft = 0;
     let inkBarWidth = 0;
-    if (this.state.selectedTab.index !== -1) {
-      const containerXOffset = this.tabItemContainerNode ?
-        this.tabItemContainerNode.scrollLeft - this.tabItemContainerNode.getBoundingClientRect().left : 0;
-      inkBarLeft = this.state.selectedTab.left + containerXOffset;
-      inkBarWidth = this.state.selectedTab.width;
+    if (this.state.selectedIndex !== -1) {
+      const tab = this.tabComponentList[this.state.selectedIndex];
+
+      if (tab instanceof Component) {
+        const tabMeasurements = tab.getMeasurements();
+        const container = this.getContainerMeasurements();
+        inkBarLeft = tabMeasurements.left + container.scrollLeft - container.left;
+        inkBarWidth = tabMeasurements.width;
+      }
     }
 
     const inkBar = (
@@ -334,14 +363,14 @@ class Tabs extends Component {
         {(tabType === 'scrollable-buttons') ?
           <EventListener
             target="window"
-            onResize={this.handleResize}
+            onResize={this.handleWindowResize}
           /> :
           null
         }
         {this.tabItemContainerNode &&
           <EventListener
             target={this.tabItemContainerNode}
-            onScroll={this.handleOnScroll}
+            onScroll={this.handleContainerScroll}
           />
         }
         {tabType !== 'fixed' ?

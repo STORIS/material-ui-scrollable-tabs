@@ -89,12 +89,6 @@ class Tab extends Component {
     onActive: PropTypes.func,
     /**
      * @ignore
-     * Callback function executed in componentDidMount and componentDidUpdate
-     * This property is overriden by the Tabs component.
-     */
-    onSelectedLoad: PropTypes.func,
-    /**
-     * @ignore
      * This property is overriden by the Tabs component.
      */
     onTouchTap: PropTypes.func,
@@ -108,11 +102,6 @@ class Tab extends Component {
      * Override the inline-styles of the root element.
      */
     style: PropTypes.object,
-    /**
-     * If value prop passed to Tabs component, this value prop is also required.
-     * It assigns a value to the tab so that it can be selected by the Tabs.
-     */
-    value: PropTypes.any,
     /**
      * @ignore
      * This property is overriden by the Tabs component.
@@ -129,42 +118,22 @@ class Tab extends Component {
     muiTheme: PropTypes.object.isRequired,
   };
 
-  componentDidMount() {
-    this.handleComponentUpdate();
-  }
-
-  componentDidUpdate() {
-    this.handleComponentUpdate();
-  }
-
-  measurements = {
-    tabLeft: 0,
-    tabWidth: 0,
-  }
-
-  handleComponentUpdate = () => {
-    this.setMeasurements();
-    const {
-      selected,
-      onSelectedLoad,
-    } = this.props;
-    if (selected) {
-      onSelectedLoad(this.measurements);
-    }
-  }
-
-  setMeasurements = () => {
+  getMeasurements = () => {
     const boundingClientRect = this.buttonComponent.button.getBoundingClientRect();
-    this.measurements = {
-      tabLeft: boundingClientRect.left,
-      tabWidth: boundingClientRect.width,
+    return {
+      top: boundingClientRect.top,
+      bottom: boundingClientRect.bottom,
+      left: boundingClientRect.left,
+      right: boundingClientRect.right,
+      height: boundingClientRect.height,
+      width: boundingClientRect.width,
     };
   }
 
   handleTouchTap = (event) => {
     if (this.props.onTouchTap) {
       this.onTouchTapTarget = event.currentTarget;
-      this.props.onTouchTap(this.props.value, event, this);
+      this.props.onTouchTap(this);
     }
   };
 
@@ -179,9 +148,7 @@ class Tab extends Component {
       buttonStyle,
       isLargeView, // eslint-disable-line no-unused-vars
       isMultiLine, // eslint-disable-line no-unused-vars
-      onSelectedLoad, // eslint-disable-line no-unused-vars
       style,
-      value, // eslint-disable-line no-unused-vars
       height, // eslint-disable-line no-unused-vars
       width, // eslint-disable-line no-unused-vars
       ...other
