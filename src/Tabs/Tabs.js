@@ -115,10 +115,12 @@ class Tabs extends Component {
   };
 
   state = {
-    selectedTabLeft: 0,
-    selectedTabWidth: 0,
     offsetY: 0,
-    selectedIndex: 0,
+    selectedTab: {
+      index: 0,
+      left: 0,
+      width: 0,
+    },
   };
 
   componentDidMount() {
@@ -129,11 +131,14 @@ class Tabs extends Component {
      * multiple renderings will be required when mounting
      */
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
-      selectedIndex: valueLink.value !== undefined ?
-        this.getSelectedIndex(this.props) :
-        initialIndex < this.getTabCount() ?
-          initialIndex :
-          0,
+      selectedTab: {
+        ...this.state.selectedTab,
+        index: valueLink.value !== undefined ?
+          this.getSelectedIndex(this.props) :
+          initialIndex < this.getTabCount() ?
+            initialIndex :
+            0,
+      },
     });
 
     this.calculateShowScroll();
@@ -146,7 +151,10 @@ class Tabs extends Component {
     };
 
     if (valueLink.value !== undefined) {
-      newState.selectedIndex = this.getSelectedIndex(newProps);
+      newState.selectedTab = {
+        ...this.state.selectedTab,
+        index: this.getSelectedIndex(newProps),
+      };
     }
 
     this.setState(newState);
@@ -237,7 +245,7 @@ class Tabs extends Component {
     const index = tab.props.index;
 
     if ((valueLink.value && valueLink.value !== value) ||
-      this.state.selectedIndex !== index) {
+      this.state.selectedTab.index !== index) {
       valueLink.requestChange(value, event, tab);
     }
 
@@ -247,9 +255,12 @@ class Tabs extends Component {
 
     this.scrollIntoView(index, tab);
 
-    if (index !== this.state.selectedIndex) {
+    if (index !== this.state.selectedTab.index) {
       this.setState({
-        selectedIndex: index,
+        selectedTab: {
+          ...this.state.selectedTab,
+          index,
+        },
       });
     }
   };
@@ -278,14 +289,17 @@ class Tabs extends Component {
   getSelected(tab, index) {
     const valueLink = this.getValueLink(this.props);
     return valueLink.value ? valueLink.value === tab.props.value :
-      this.state.selectedIndex === index;
+      this.state.selectedTab.index === index;
   }
 
-  setMeasurements = (measurements) => {
-    if (measurements.tabWidth !== this.state.selectedTabWidth || measurements.tabLeft !== this.state.selectedTabLeft) {
+  setMeasurements = ({tabLeft, tabWidth}) => {
+    if (tabWidth !== this.state.selectedTab.width || tabLeft !== this.state.selectedTab.left) {
       this.setState({
-        selectedTabWidth: measurements.tabWidth,
-        selectedTabLeft: measurements.tabLeft,
+        selectedTab: {
+          ...this.state.selectedTab,
+          left: tabLeft,
+          width: tabWidth,
+        },
       });
     }
   };
@@ -352,11 +366,11 @@ class Tabs extends Component {
 
     let inkBarLeft = 0;
     let inkBarWidth = 0;
-    if (this.state.selectedIndex !== -1 && this.tabComponentList[this.state.selectedIndex] instanceof React.Component) {
+    if (this.state.selectedTab.index !== -1) {
       const containerXOffset = this.tabItemContainerNode ?
         this.tabItemContainerNode.scrollLeft - this.tabItemContainerNode.getBoundingClientRect().left : 0;
-      inkBarLeft = this.state.selectedTabLeft + containerXOffset;
-      inkBarWidth = this.state.selectedTabWidth;
+      inkBarLeft = this.state.selectedTab.left + containerXOffset;
+      inkBarWidth = this.state.selectedTab.width;
     }
 
     const inkBar = (
