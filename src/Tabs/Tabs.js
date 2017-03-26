@@ -65,10 +65,6 @@ class Tabs extends Component {
      */
     inkBarStyle: PropTypes.object,
     /**
-     * Called when the selected value change.
-     */
-    onChange: PropTypes.func,
-    /**
      * Override the inline-styles of the root element.
      */
     style: PropTypes.object,
@@ -95,18 +91,14 @@ class Tabs extends Component {
      */
     tabType: PropTypes.oneOf(['fixed', 'scrollable', 'scrollable-buttons']),
     /**
-     * Makes Tabs controllable and selects the tab whose value prop matches this prop.
-     */
-    value: PropTypes.any,
-    /**
      * @ignore
+     * passed by withWidth decorator
      */
     width: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
     initialSelectedIndex: 0,
-    onChange: () => {},
     tabType: 'fixed',
   };
 
@@ -124,7 +116,6 @@ class Tabs extends Component {
   };
 
   componentDidMount() {
-    const valueLink = this.getValueLink(this.props);
     const initialIndex = this.props.initialSelectedIndex;
     /**
      * setting inkbar position and width requires the DOM to have been rendered so
@@ -133,9 +124,7 @@ class Tabs extends Component {
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
       selectedTab: {
         ...this.state.selectedTab,
-        index: valueLink.value !== undefined ?
-          this.getSelectedIndex(this.props) :
-          initialIndex < this.getTabCount() ?
+        index: initialIndex < this.getTabCount() ?
             initialIndex :
             0,
       },
@@ -145,17 +134,9 @@ class Tabs extends Component {
   }
 
   componentWillReceiveProps(newProps, nextContext) {
-    const valueLink = this.getValueLink(newProps);
     const newState = {
       muiTheme: nextContext.muiTheme || this.context.muiTheme,
     };
-
-    if (valueLink.value !== undefined) {
-      newState.selectedTab = {
-        ...this.state.selectedTab,
-        index: this.getSelectedIndex(newProps),
-      };
-    }
 
     this.setState(newState);
   }
@@ -193,27 +174,6 @@ class Tabs extends Component {
     return this.getTabs().length;
   }
 
-  // Do not use outside of this component, it will be removed once valueLink is deprecated
-  getValueLink(props) {
-    return props.valueLink || {
-      value: props.value,
-      requestChange: props.onChange,
-    };
-  }
-
-  getSelectedIndex(props) {
-    const valueLink = this.getValueLink(props);
-    let selectedIndex = -1;
-
-    this.getTabs(props).forEach((tab, index) => {
-      if (valueLink.value === tab.props.value) {
-        selectedIndex = index;
-      }
-    });
-
-    return selectedIndex;
-  }
-
   handleOnScroll = () => {
     this.calculateShowScroll();
   }
@@ -237,13 +197,7 @@ class Tabs extends Component {
   }
 
   handleTabTouchTap = (value, event, tab) => {
-    const valueLink = this.getValueLink(this.props);
     const index = tab.props.index;
-
-    if ((valueLink.value && valueLink.value !== value) ||
-      this.state.selectedTab.index !== index) {
-      valueLink.requestChange(value, event, tab);
-    }
 
     if (tab.props.onActive) {
       tab.props.onActive(tab);
@@ -289,9 +243,7 @@ class Tabs extends Component {
   }
 
   getSelected(tab, index) {
-    const valueLink = this.getValueLink(this.props);
-    return valueLink.value ? valueLink.value === tab.props.value :
-      this.state.selectedTab.index === index;
+    return this.state.selectedTab.index === index;
   }
 
   setMeasurements = ({tabLeft, tabWidth}) => {
@@ -312,7 +264,6 @@ class Tabs extends Component {
       contentContainerStyle,
       initialSelectedIndex, // eslint-disable-line no-unused-vars
       inkBarStyle,
-      onChange, // eslint-disable-line no-unused-vars
       style,
       tabItemContainerStyle,
       tabTemplate,
@@ -324,8 +275,6 @@ class Tabs extends Component {
 
     const {prepareStyles} = this.context.muiTheme;
     const styles = getStyles(this.props, this.context, this.state);
-    const valueLink = this.getValueLink(this.props);
-    const tabValue = valueLink.value;
     const tabContent = [];
     const fixedWidth = 100 / this.getTabCount();
 
@@ -335,11 +284,6 @@ class Tabs extends Component {
       warning(tab.type && tab.type.muiName === 'Tab',
         `Material-UI: Tabs only accepts Tab Components as children.
         Found ${tab.type.muiName || tab.type} as child number ${index + 1} of Tabs`);
-
-      warning(!tabValue || tab.props.value !== undefined,
-        `Material-UI: Tabs value prop has been passed, but Tab ${index}
-        does not have a value prop. Needs value if Tabs is going
-        to be a controlled component.`);
 
       tabContent.push(tab.props.children ?
         React.createElement(tabTemplate || TabTemplate, {
