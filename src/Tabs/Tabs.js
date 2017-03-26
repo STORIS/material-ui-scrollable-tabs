@@ -358,39 +358,63 @@ class Tabs extends Component {
       </div>
     );
 
+    const scrollButtonLeft = (
+      (tabType === 'scrollable-buttons') ? (
+        <ScrollButton
+          direction={'left'}
+          height={tabHeight}
+          onTouchTap={this.handleLeftScrollTouchTap}
+          visible={this.state.showLeftScroll}
+        />
+      ) : null
+    );
+
+    const scrollButtonRight = (
+      (tabType === 'scrollable-buttons') ? (
+        <ScrollButton
+          direction={'right'}
+          height={tabHeight}
+          onTouchTap={this.handleRightScrollTouchTap}
+          visible={this.state.showRightScroll}
+        />
+      ) : null
+    );
+
+    const containerScrollListener = (
+      this.tabItemContainerNode && (
+        <EventListener
+          target={this.tabItemContainerNode}
+          onScroll={this.handleContainerScroll}
+        />
+      )
+    );
+
+    const scrollbarSizeListener = (
+      (tabType !== 'fixed') ? (
+        <ScrollbarSize
+          onLoad={this.handleScrollbarSizeChange}
+          onChange={this.handleScrollbarSizeChange}
+        />
+      ) : null
+    );
+
+    const windowResizeListener = (
+      (tabType === 'scrollable-buttons') ? (
+        <EventListener
+          target="window"
+          onResize={this.handleWindowResize}
+        />
+       ) : null
+    );
+
     return (
       <div style={prepareStyles(Object.assign({}, style))} {...other}>
-        {(tabType === 'scrollable-buttons') ?
-          <EventListener
-            target="window"
-            onResize={this.handleWindowResize}
-          /> :
-          null
-        }
-        {this.tabItemContainerNode &&
-          <EventListener
-            target={this.tabItemContainerNode}
-            onScroll={this.handleContainerScroll}
-          />
-        }
-        {tabType !== 'fixed' ?
-          <ScrollbarSize
-            onLoad={this.handleScrollbarSizeChange}
-            onChange={this.handleScrollbarSizeChange}
-          /> :
-          null
-        }
+        {windowResizeListener}
+        {containerScrollListener}
+        {scrollbarSizeListener}
         <div style={prepareStyles(Object.assign({}, styles.root))}>
           <div style={{display: 'flex'}}>
-            {(tabType === 'scrollable-buttons') ?
-              <ScrollButton
-                direction={'left'}
-                height={tabHeight}
-                onTouchTap={this.handleLeftScrollTouchTap}
-                visible={this.state.showLeftScroll}
-              /> :
-              null
-            }
+            {scrollButtonLeft}
             <div
               style={prepareStyles(Object.assign(styles.tabItemContainer, tabItemContainerStyle))}
               ref={(node) => {
@@ -400,15 +424,7 @@ class Tabs extends Component {
               {tabs}
               {inkBar}
             </div>
-            {(tabType === 'scrollable-buttons') ?
-              <ScrollButton
-                direction={'right'}
-                height={tabHeight}
-                onTouchTap={this.handleRightScrollTouchTap}
-                visible={this.state.showRightScroll}
-              /> :
-              null
-            }
+            {scrollButtonRight}
           </div>
         </div>
         <div
