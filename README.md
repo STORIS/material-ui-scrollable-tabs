@@ -1,5 +1,7 @@
 # Material-UI-Scrollable-Tabs
 
+## The major features of this package have been merged into Material-UI's [@next](https://github.com/callemall/material-ui/tree/next) branch. As a result, no additional features are planned for this package.  You are welcome to continuing using this package, but we strongly suggest using Material-UI instead.
+
 Material-UI-Scrollable-Tabs is an extension of the Tabs component offered by [Material-UI](http://www.material-ui.com/).
 It offers several additional features beyond those in the native Tabs component offered by Material-UI.
 
@@ -48,8 +50,7 @@ In addition to those documented by Material-UI, this package offers the followin
 ### Tabs Properties
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| isLargeView | bool | false | Set to true if the component is being rendered on a large width viewport and should adhere to material design's large tab standards. |
-| tabType | enum:<br />'fixed'<br />'scrollable'<br />'scrollable-buttons' | 'fixed' | See descriptions of enumerations below. |
+| tabType | enum:<br />`fixed`<br />`scrollable`<br />`scrollable-buttons` | `fixed` | See descriptions of enumerations below. |
 
 #### TabTypes
 ##### Fixed

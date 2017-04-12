@@ -103,11 +103,6 @@ class Tab extends Component {
      */
     style: PropTypes.object,
     /**
-     * If value prop passed to Tabs component, this value prop is also required.
-     * It assigns a value to the tab so that it can be selected by the Tabs.
-     */
-    value: PropTypes.any,
-    /**
      * @ignore
      * This property is overriden by the Tabs component.
      */
@@ -123,18 +118,24 @@ class Tab extends Component {
     muiTheme: PropTypes.object.isRequired,
   };
 
-  getLeft() {
-    return this.buttonComponent.button.getBoundingClientRect().left;
-  }
-
-  getWidth() {
-    return this.buttonComponent.button.getBoundingClientRect().width;
+  getMeasurements = () => {
+    if (this.buttonComponent.button instanceof Element) {
+      const boundingClientRect = this.buttonComponent.button.getBoundingClientRect();
+      return {
+        top: boundingClientRect.top,
+        bottom: boundingClientRect.bottom,
+        left: boundingClientRect.left,
+        right: boundingClientRect.right,
+        height: boundingClientRect.height,
+        width: boundingClientRect.width,
+      };
+    } else return {};
   }
 
   handleTouchTap = (event) => {
     if (this.props.onTouchTap) {
       this.onTouchTapTarget = event.currentTarget;
-      this.props.onTouchTap(this.props.value, event, this);
+      this.props.onTouchTap(this);
     }
   };
 
@@ -150,7 +151,6 @@ class Tab extends Component {
       isLargeView, // eslint-disable-line no-unused-vars
       isMultiLine, // eslint-disable-line no-unused-vars
       style,
-      value, // eslint-disable-line no-unused-vars
       height, // eslint-disable-line no-unused-vars
       width, // eslint-disable-line no-unused-vars
       ...other
@@ -187,7 +187,9 @@ class Tab extends Component {
         focusRippleOpacity={rippleOpacity}
         touchRippleOpacity={rippleOpacity}
         onTouchTap={this.handleTouchTap}
-        ref={(buttonComponent) => this.buttonComponent = buttonComponent}
+        ref={(buttonComponent) => {
+          this.buttonComponent = buttonComponent;
+        }}
       >
         <div style={Object.assign(styles.button, buttonStyle)} >
           {iconElement}
