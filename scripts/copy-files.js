@@ -62,7 +62,7 @@ function createPackageFile() {
       author,
       version,
       description,
-      main: './index.js',
+      main: './Tabs/index.js',
       keywords,
       repository,
       license,
