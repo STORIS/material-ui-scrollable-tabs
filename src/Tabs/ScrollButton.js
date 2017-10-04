@@ -41,7 +41,7 @@ class ScrollButton extends Component {
     /**
      * Callback to execute for button press
      */
-    onTouchTap: PropTypes.func,
+    onClick: PropTypes.func,
     /**
      * Should the button be present or just consume space
      */
@@ -62,7 +62,7 @@ class ScrollButton extends Component {
     const {
       direction,
       height, // eslint-disable-line no-unused-vars
-      onTouchTap,
+      onClick,
       visible,
       ...other
     } = this.props;
@@ -80,7 +80,7 @@ class ScrollButton extends Component {
           touchRippleColor={rippleColor}
           focusRippleOpacity={rippleOpacity}
           touchRippleOpacity={rippleOpacity}
-          onTouchTap={onTouchTap}
+          onClick={onClick}
         >
           <div
             style={styles.button}

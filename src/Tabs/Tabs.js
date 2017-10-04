@@ -324,7 +324,7 @@ class Tabs extends Component {
         selected: this.getSelected(tab, index),
         height: tab.props.height || tabHeight,
         width: (tabType === 'fixed') ? `${fixedWidth}%` : 'auto',
-        onTouchTap: this.handleTabTouchTap,
+        onClick: this.handleTabTouchTap,
         isLargeView: (width === LARGE),
         ref: (tabComponent) => {
           this.tabComponentList[index] = tabComponent;
@@ -363,7 +363,7 @@ class Tabs extends Component {
         <ScrollButton
           direction={'left'}
           height={tabHeight}
-          onTouchTap={this.handleLeftScrollTouchTap}
+          onClick={this.handleLeftScrollTouchTap}
           visible={this.state.showLeftScroll}
         />
       ) : null
@@ -374,7 +374,7 @@ class Tabs extends Component {
         <ScrollButton
           direction={'right'}
           height={tabHeight}
-          onTouchTap={this.handleRightScrollTouchTap}
+          onClick={this.handleRightScrollTouchTap}
           visible={this.state.showRightScroll}
         />
       ) : null
