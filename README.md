@@ -1,6 +1,8 @@
-# Material-UI-Scrollable-Tabs
+# **DEPRECATION NOTICE**
 
-## The major features of this package have been merged into Material-UI's [@next](https://github.com/callemall/material-ui/tree/next) branch. As a result, no additional features are planned for this package.  You are welcome to continuing using this package, but we strongly suggest using Material-UI instead.
+⚠️ **This package is NO LONGER SUPPORTED**.  All features of this package were fully ported to the v1 branch of material-ui on 2017-04-11.  You are welcome to continue using this package, but no changes will be made and no support will be offered.  You are strongly advised to upgrade to the v1 branch of material-ui if you wish to utilize the features provided by this package. As always, you may fork this repository and modify it to suit your personal needs, but pull requests will not be accepted.
+
+# Material-UI-Scrollable-Tabs
 
 Material-UI-Scrollable-Tabs is an extension of the Tabs component offered by [Material-UI](http://www.material-ui.com/).
 It offers several additional features beyond those in the native Tabs component offered by Material-UI.
