@@ -1,16 +1,5 @@
 ## HEAD
 
-## 1.1.0
-
-###### _Oct 04, 2017_
-
-###### Changed
-
-- Use `onClick` instead of `onTouchTap` to support material-ui@0.19.0
-- Minimum supported material-ui version is now v0.19.0
-
-⚠️ **This is a breaking change**. If you still use an older version of material-ui, you should stay at v1.0.0 of this component.
-
 ## 1.0.0
 
 ###### _Apr 12, 2017_
