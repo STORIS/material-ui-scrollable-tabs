@@ -2,7 +2,7 @@
   "name": "material-ui-scrollable-tabs-build",
   "private": true,
   "author": "STORIS",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A Scrollable Tabs extension for material-ui.",
   "main": "./src/index.js",
   "keywords": [
