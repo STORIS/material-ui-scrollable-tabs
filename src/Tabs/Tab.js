@@ -133,9 +133,9 @@ class Tab extends Component {
     } else return {};
   }
 
-  handleTouchTap = (event) => {
+  handleClick = (event) => {
     if (this.props.onClick) {
-      this.onTouchTapTarget = event.currentTarget;
+      this.onClickTarget = event.currentTarget;
       this.props.onClick(this);
     }
   };
@@ -187,7 +187,7 @@ class Tab extends Component {
         touchRippleColor={rippleColor}
         focusRippleOpacity={rippleOpacity}
         touchRippleOpacity={rippleOpacity}
-        onClick={this.handleTouchTap}
+        onClick={this.handleClick}
         ref={(buttonComponent) => {
           this.buttonComponent = buttonComponent;
         }}
