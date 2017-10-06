@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import React, {
   Component,
   cloneElement,
   Children,
   isValidElement,
-  PropTypes,
 } from 'react';
 import EventListener from 'react-event-listener';
 import warning from 'warning';
@@ -159,11 +159,11 @@ class Tabs extends Component {
 
   tabComponentList = [];
 
-  handleLeftScrollTouchTap = () => {
+  handleLeftScrollClick = () => {
     this.moveTabsScroll(-this.tabItemContainerNode.clientWidth);
   }
 
-  handleRightScrollTouchTap = () => {
+  handleRightScrollClick = () => {
     this.moveTabsScroll(this.tabItemContainerNode.clientWidth);
   }
 
@@ -181,7 +181,7 @@ class Tabs extends Component {
     });
   }
 
-  handleTabTouchTap = (tab) => {
+  handleTabClick = (tab) => {
     const {
       index,
       onActive,
@@ -324,7 +324,7 @@ class Tabs extends Component {
         selected: this.getSelected(tab, index),
         height: tab.props.height || tabHeight,
         width: (tabType === 'fixed') ? `${fixedWidth}%` : 'auto',
-        onTouchTap: this.handleTabTouchTap,
+        onClick: this.handleTabClick,
         isLargeView: (width === LARGE),
         ref: (tabComponent) => {
           this.tabComponentList[index] = tabComponent;
@@ -363,7 +363,7 @@ class Tabs extends Component {
         <ScrollButton
           direction={'left'}
           height={tabHeight}
-          onTouchTap={this.handleLeftScrollTouchTap}
+          onClick={this.handleLeftScrollClick}
           visible={this.state.showLeftScroll}
         />
       ) : null
@@ -374,7 +374,7 @@ class Tabs extends Component {
         <ScrollButton
           direction={'right'}
           height={tabHeight}
-          onTouchTap={this.handleRightScrollTouchTap}
+          onClick={this.handleRightScrollClick}
           visible={this.state.showRightScroll}
         />
       ) : null

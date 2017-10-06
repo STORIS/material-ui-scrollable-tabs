@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth';
 
 import CodeExample from '../../CodeExample';

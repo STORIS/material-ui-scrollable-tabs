@@ -1,5 +1,22 @@
 ## HEAD
 
+## 2.0.0
+
+This will be the last release of this library.  **USE AT YOUR OWN RISK**.  We highly suggest that you migrate
+to the v1 branch of material-ui to take advantage of the features provided by this library natively within
+that package.
+
+⚠️ **This is a breaking change**. If you still use an older version of material-ui, you should stay at v1.0.0 of this component.
+
+###### _Oct 6, 2017_
+
+###### Component Fixes / Enhancements
+- Update to material-ui 0.19.x
+- - Support onClick rather than onTouchTap
+- Use standalone prop-types library
+- Make material-ui a peerDependency rather than a dependency
+- Support React ^15.4.0 or ^16.0.0 via peerDependency
+
 ## 1.0.0
 
 ###### _Apr 12, 2017_

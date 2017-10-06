@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import MarkdownElement from '../MarkdownElement';
 import transitions from 'material-ui/styles/transitions';
 import CodeBlockTitle from './CodeBlockTitle';
@@ -41,7 +42,7 @@ class CodeBlock extends Component {
     expand: false,
   };
 
-  handleTouchTap = () => {
+  handleClick = () => {
     this.setState({
       expand: !this.state.expand,
     });
@@ -63,7 +64,7 @@ ${this.props.children}
 
     return (
       <div style={styles.root}>
-        <div onTouchTap={this.handleTouchTap} style={styles.codeBlockTitle}>
+        <div onClick={this.handleClick} style={styles.codeBlockTitle}>
           <CodeBlockTitle title={this.props.title} tooltip={tooltip} />
         </div>
         <MarkdownElement style={codeStyle} text={text} />

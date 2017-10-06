@@ -1,6 +1,5 @@
 import React from 'react';
 import {render} from 'react-dom';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import WebFont from 'webfontloader';
 
 import normalize from 'normalize.css'; // eslint-disable-line no-unused-vars
@@ -15,9 +14,6 @@ const webfontCb = () => {
       window.React = React;
     }
   }
-
-	// inject tap event, currently not provided by react, required by material-ui
-  injectTapEventPlugin();
 
   render(
     app,
