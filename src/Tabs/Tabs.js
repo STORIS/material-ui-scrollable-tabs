@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import React, {
   Component,
   cloneElement,
   Children,
   isValidElement,
-  PropTypes,
 } from 'react';
 import EventListener from 'react-event-listener';
 import warning from 'warning';

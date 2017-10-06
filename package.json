@@ -30,11 +30,12 @@
     "prebuild": "npm run clean:build"
   },
   "peerDependencies": {
-    "react": "^15.4.0"
+    "react": "^15.4.0 || ^16.0.0"
   },
   "dependencies": {
     "babel-runtime": "^6.18.0",
     "material-ui": "^0.19.0",
+    "prop-types": "^15.6.0",
     "react-event-listener": "^0.4.0",
     "react-scrollbar-size": "^0.1.0",
     "scroll": "^2.0.0",

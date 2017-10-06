@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import EnhancedButton from 'material-ui/internal/EnhancedButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
